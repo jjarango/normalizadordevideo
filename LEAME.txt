@@ -1,0 +1,29 @@
+NORMALIZADOR DE VIDEO V2
+========================
+
+USO LOCAL EN WINDOWS
+1. Descomprima toda la carpeta.
+2. Haga doble clic en INICIAR_LOCAL.cmd.
+3. Se abrirá el navegador en http://127.0.0.1:8787/
+4. No cierre la ventana negra mientras utiliza la aplicación.
+5. Seleccione el video, pulse "Corregir video" y descargue el resultado.
+
+No abra index.html directamente con doble clic: los navegadores bloquean los módulos y trabajadores WebAssembly desde file://.
+
+USO EN GITHUB PAGES
+1. Suba TODO el contenido de esta carpeta al repositorio, incluyendo las carpetas vendor/ffmpeg y vendor/core.
+2. En Settings > Pages seleccione Deploy from a branch, rama main y carpeta /root.
+3. Abra la URL que GitHub Pages le proporcione.
+
+No cambie la estructura interna de carpetas.
+
+SALIDA
+- MP4 H.264
+- 1920 x 1080
+- Píxel cuadrado 1:1
+- 30 fps constantes
+- yuv420p
+- AAC 48 kHz
+
+PRIVACIDAD
+El video no se carga a Internet. Se procesa dentro del navegador.
