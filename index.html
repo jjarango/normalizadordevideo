@@ -4,149 +4,120 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>Normalizador de video</title>
+<title>Normalizador de video por lotes</title>
 <style>
-:root{--bg:#07111e;--panel:#0d1b2d;--panel2:#12243a;--line:rgba(255,255,255,.12);--text:#f5f8fc;--muted:#a9b9cc;--accent:#66e0bf;--accent2:#69aaff;--danger:#ff8998;--warn:#ffd37a;--r:22px}
-*{box-sizing:border-box}html,body{min-height:100%}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 12% 12%,rgba(105,170,255,.18),transparent 30%),radial-gradient(circle at 86% 18%,rgba(102,224,191,.14),transparent 28%),linear-gradient(145deg,#07111e,#0a1727 58%,#07101b);background-attachment:fixed}.shell{width:min(1120px,calc(100% - 28px));margin:auto;padding:42px 0 50px}.top{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;margin-bottom:24px}.eyebrow{display:inline-flex;gap:9px;align-items:center;padding:8px 12px;border:1px solid rgba(102,224,191,.25);background:rgba(102,224,191,.08);border-radius:999px;color:#c2f5e8;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)}h1{margin:15px 0 10px;font-size:clamp(36px,5vw,62px);line-height:.98;letter-spacing:-.045em}.lead{margin:0;max-width:760px;color:var(--muted);font-size:18px;line-height:1.55}.badge{min-width:220px;padding:15px 16px;border:1px solid var(--line);border-radius:17px;background:rgba(0,0,0,.18);color:var(--muted);font-size:13px;line-height:1.45}.badge strong{display:block;color:var(--text);font-size:14px;margin-bottom:4px}.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:22px;align-items:start}.card{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,rgba(14,29,48,.95),rgba(8,19,33,.96));box-shadow:0 25px 70px rgba(0,0,0,.38);overflow:hidden}.body{padding:23px}.drop{min-height:240px;display:grid;place-items:center;text-align:center;padding:34px 22px;border:1.5px dashed rgba(105,170,255,.45);border-radius:18px;background:linear-gradient(135deg,rgba(105,170,255,.08),rgba(102,224,191,.055));cursor:pointer;transition:.2s}.drop:hover,.drop.drag{transform:translateY(-2px);border-color:var(--accent);background:linear-gradient(135deg,rgba(105,170,255,.14),rgba(102,224,191,.11))}.icon{width:68px;height:68px;display:grid;place-items:center;margin:0 auto 18px;border:1px solid rgba(255,255,255,.11);border-radius:20px;background:linear-gradient(145deg,rgba(105,170,255,.22),rgba(102,224,191,.16));font-size:31px}.drop h2{margin:0 0 8px;font-size:23px}.drop p{margin:0;color:var(--muted);line-height:1.5}.linkish{color:#bddcff;font-weight:800;text-decoration:underline;text-underline-offset:3px}input[type=file]{display:none}.file{display:none;grid-template-columns:170px minmax(0,1fr);gap:17px;margin-top:17px;padding:15px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.045)}.file.show{display:grid}.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;background:#000;border:1px solid rgba(255,255,255,.08)}.meta{min-width:0;display:flex;flex-direction:column;justify-content:center}.name{font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:8px}.pills{display:flex;flex-wrap:wrap;gap:8px}.pill{padding:5px 8px;border:1px solid rgba(255,255,255,.09);border-radius:999px;background:rgba(0,0,0,.16);color:var(--muted);font-size:13px}.actions{display:flex;gap:11px;margin-top:17px}button,.download{min-height:50px;border:0;border-radius:14px;padding:0 18px;font:inherit;font-weight:850;cursor:pointer;transition:.18s}button:disabled{opacity:.45;cursor:not-allowed}.primary{flex:1;color:#041712;background:linear-gradient(135deg,#76e9cc,#57ceb7);box-shadow:0 13px 28px rgba(102,224,191,.16)}.primary:hover:not(:disabled){transform:translateY(-2px)}.secondary{color:var(--text);background:rgba(255,255,255,.07);border:1px solid var(--line)}.danger{color:#ffe0e5;background:rgba(255,137,152,.12);border:1px solid rgba(255,137,152,.26)}.status{display:none;margin-top:17px;padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.18)}.status.show{display:block}.statusline{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}.statustext{font-weight:800}.percent{color:#c8f8eb;font-weight:900;font-variant-numeric:tabular-nums}.bar{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}.bar span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .18s linear}.note{margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.result{display:none;margin-top:17px;padding:17px;border:1px solid rgba(102,224,191,.28);border-radius:18px;background:rgba(102,224,191,.07)}.result.show{display:block}.result h3{margin:0 0 7px;font-size:20px}.result p{margin:0 0 13px;color:var(--muted);line-height:1.45}.result video{width:100%;max-height:430px;margin-bottom:13px;border-radius:14px;background:#000;border:1px solid rgba(255,255,255,.08)}.download{display:flex;align-items:center;justify-content:center;width:100%;text-decoration:none;color:#061914;background:linear-gradient(135deg,#79eccc,#5bd2ba)}.side h2{margin:0 0 6px;font-size:21px}.side>p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.45}.specs{display:grid;gap:10px}.spec{display:grid;grid-template-columns:43px 1fr;gap:12px;align-items:center;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.035)}.sicon{width:43px;height:43px;display:grid;place-items:center;border-radius:12px;background:rgba(105,170,255,.11);color:#d1e6ff;font-weight:900;font-size:13px}.spec strong{display:block;font-size:14px;margin-bottom:2px}.spec small{color:var(--muted);font-size:12px}.notice{margin-top:17px;padding:14px;border:1px solid rgba(255,211,122,.18);border-radius:14px;background:rgba(255,211,122,.07);color:#dbe5f2;font-size:13px;line-height:1.5}details{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted)}summary{cursor:pointer;color:#dce7f3;font-weight:750}pre{max-height:220px;overflow:auto;white-space:pre-wrap;word-break:break-word;padding:12px;border-radius:12px;background:rgba(0,0,0,.25);font-size:11px;line-height:1.42}footer{text-align:center;margin-top:20px;color:#8092a8;font-size:12px}.error{color:#ffd3d9}.ok{color:#c8f8eb}@media(max-width:850px){.top{display:block}.badge{margin-top:18px}.grid{grid-template-columns:1fr}}@media(max-width:560px){.shell{width:calc(100% - 18px);padding-top:24px}.body{padding:15px}.file{grid-template-columns:1fr}.actions{flex-direction:column}.actions button{width:100%}h1{font-size:39px}.lead{font-size:16px}}
+:root{--bg:#07111e;--panel:#0d1d30;--panel2:#091523;--text:#edf5ff;--muted:#9dafc4;--line:rgba(255,255,255,.1);--accent:#66e0bf;--accent2:#69aaff;--danger:#ff8998;--warning:#ffd37a;--r:22px}
+*{box-sizing:border-box}html,body{min-height:100%}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 12% 12%,rgba(105,170,255,.18),transparent 30%),radial-gradient(circle at 86% 18%,rgba(102,224,191,.14),transparent 28%),linear-gradient(145deg,#07111e,#0a1727 58%,#07101b);background-attachment:fixed}.shell{width:min(1160px,calc(100% - 28px));margin:auto;padding:40px 0 50px}.top{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;margin-bottom:24px}.eyebrow{display:inline-flex;gap:9px;align-items:center;padding:8px 12px;border:1px solid rgba(102,224,191,.25);background:rgba(102,224,191,.08);border-radius:999px;color:#c2f5e8;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)}h1{margin:15px 0 10px;font-size:clamp(36px,5vw,62px);line-height:.98;letter-spacing:-.045em}.lead{margin:0;max-width:780px;color:var(--muted);font-size:18px;line-height:1.55}.badge{min-width:230px;padding:15px 16px;border:1px solid var(--line);border-radius:17px;background:rgba(0,0,0,.18);color:var(--muted);font-size:13px;line-height:1.45}.badge strong{display:block;color:var(--text);font-size:14px;margin-bottom:4px}.grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(285px,.55fr);gap:22px;align-items:start}.card{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,rgba(14,29,48,.96),rgba(8,19,33,.97));box-shadow:0 25px 70px rgba(0,0,0,.38);overflow:hidden}.body{padding:23px}.drop{min-height:190px;display:grid;place-items:center;text-align:center;padding:28px 22px;border:1.5px dashed rgba(105,170,255,.45);border-radius:18px;background:linear-gradient(135deg,rgba(105,170,255,.08),rgba(102,224,191,.055));cursor:pointer;transition:.2s}.drop:hover,.drop.drag{transform:translateY(-2px);border-color:var(--accent);background:linear-gradient(135deg,rgba(105,170,255,.14),rgba(102,224,191,.11))}.drop.disabled{opacity:.55;cursor:not-allowed;transform:none}.icon{width:62px;height:62px;display:grid;place-items:center;margin:0 auto 14px;border:1px solid rgba(255,255,255,.11);border-radius:19px;background:linear-gradient(145deg,rgba(105,170,255,.22),rgba(102,224,191,.16));font-size:29px}.drop h2{margin:0 0 7px;font-size:22px}.drop p{margin:0;color:var(--muted);line-height:1.5}.linkish{color:#bddcff;font-weight:800;text-decoration:underline;text-underline-offset:3px}input[type=file]{display:none}.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}button,.download{min-height:46px;border:0;border-radius:13px;padding:0 16px;font:inherit;font-weight:850;cursor:pointer;transition:.18s}button:disabled{opacity:.42;cursor:not-allowed}.primary{color:#041712;background:linear-gradient(135deg,#76e9cc,#57ceb7);box-shadow:0 13px 28px rgba(102,224,191,.14)}.primary:hover:not(:disabled),.download:hover{transform:translateY(-1px)}.secondary{color:var(--text);background:rgba(255,255,255,.07);border:1px solid var(--line)}.warning{color:#2a1a00;background:var(--warning)}.danger{color:#ffe0e5;background:rgba(255,137,152,.12);border:1px solid rgba(255,137,152,.26)}.summary{display:none;margin-top:16px;padding:15px;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.18)}.summary.show{display:block}.summaryline{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:9px}.statustext{font-weight:800}.percent{color:#c8f8eb;font-weight:900;font-variant-numeric:tabular-nums}.bar{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}.bar span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .18s linear}.note{margin:9px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.queue{display:grid;gap:11px;margin-top:16px}.empty{text-align:center;padding:22px;color:var(--muted);border:1px solid var(--line);border-radius:15px;background:rgba(0,0,0,.13)}.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.item.active{border-color:rgba(105,170,255,.5);box-shadow:0 0 0 1px rgba(105,170,255,.12) inset}.item.done{border-color:rgba(102,224,191,.28)}.item.error{border-color:rgba(255,137,152,.35)}.iname{font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.imeta{display:flex;flex-wrap:wrap;gap:7px;margin-top:7px;color:var(--muted);font-size:12px}.tag{padding:4px 7px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(0,0,0,.15)}.istatus{margin-top:8px;color:#c9d7e7;font-size:13px}.mini{height:6px;margin-top:9px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.mini span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .15s}.iactions{display:flex;align-items:center;gap:7px}.small{min-height:38px;padding:0 12px;font-size:13px}.download{display:inline-flex;align-items:center;justify-content:center;min-height:38px;text-decoration:none;color:#061914;background:linear-gradient(135deg,#79eccc,#5bd2ba);font-size:13px}.side h2{margin:0 0 6px;font-size:21px}.side>p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.45}.specs{display:grid;gap:10px}.spec{display:grid;grid-template-columns:43px 1fr;gap:12px;align-items:center;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.035)}.sicon{width:43px;height:43px;display:grid;place-items:center;border-radius:12px;background:rgba(105,170,255,.11);color:#d1e6ff;font-weight:900;font-size:13px}.spec strong{display:block;font-size:14px;margin-bottom:2px}.spec small{color:var(--muted);font-size:12px}.notice{margin-top:17px;padding:14px;border:1px solid rgba(255,211,122,.18);border-radius:14px;background:rgba(255,211,122,.07);color:#dbe5f2;font-size:13px;line-height:1.5}details{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted)}summary{cursor:pointer;color:#dce7f3;font-weight:750}pre{max-height:220px;overflow:auto;white-space:pre-wrap;word-break:break-word;padding:12px;border-radius:12px;background:rgba(0,0,0,.25);font-size:11px;line-height:1.42}footer{text-align:center;margin-top:20px;color:#8092a8;font-size:12px}.ok{color:#c8f8eb}.bad{color:#ffd3d9}@media(max-width:880px){.top{display:block}.badge{margin-top:18px}.grid{grid-template-columns:1fr}}@media(max-width:600px){.shell{width:calc(100% - 18px);padding-top:24px}.body{padding:15px}.item{grid-template-columns:1fr}.iactions{justify-content:flex-start;flex-wrap:wrap}h1{font-size:39px}.lead{font-size:16px}.toolbar button{flex:1}}
 </style>
 </head>
 <body>
 <main class="shell">
   <header class="top">
-    <div>
-      <span class="eyebrow">Motor incluido</span>
-      <h1>Normalizador de video</h1>
-      <p class="lead">Convierte los videos de su app en MP4 estándar: 1920×1080, píxel cuadrado 1:1 y 30 fotogramas por segundo constantes.</p>
-    </div>
-    <aside class="badge"><strong>🔒 Procesamiento privado</strong>El archivo permanece en su computador. No se envía a GitHub ni a ningún servidor.</aside>
+    <div><span class="eyebrow">Conversión local por lotes</span><h1>Normalizador de video</h1><p class="lead">Convierte varios videos, uno tras otro, en MP4 estándar: 1920×1080, píxel cuadrado 1:1 y 30 fotogramas por segundo constantes.</p></div>
+    <div class="badge"><strong>Privado y sin cargas</strong>Los videos se procesan dentro de este computador. No se envían a Internet.</div>
   </header>
-
-  <section class="grid">
-    <article class="card"><div class="body">
-      <div id="drop" class="drop" role="button" tabindex="0">
-        <div><div class="icon">🎞️</div><h2>Arrastre aquí el video original</h2><p>o <span class="linkish">selecciónelo en su computador</span></p><p style="margin-top:8px;font-size:13px">MP4, MOV o WebM</p></div>
+  <div class="grid">
+    <section class="card"><div class="body">
+      <div id="drop" class="drop" role="button" tabindex="0"><div><div class="icon">🎞️</div><h2>Arrastre aquí uno o varios videos</h2><p>o <span class="linkish">selecciónelos en su computador</span></p><p style="margin-top:7px;font-size:13px">MP4, MOV o WebM</p></div></div>
+      <input id="picker" type="file" accept="video/*,.mp4,.mov,.webm" multiple>
+      <div class="toolbar">
+        <button id="start" class="primary" disabled>Convertir lote</button>
+        <button id="pause" class="warning" disabled>Pausar después del actual</button>
+        <button id="cancel" class="danger" disabled>Cancelar lote</button>
+        <button id="downloadAll" class="secondary" disabled>Descargar todos</button>
+        <button id="clear" class="secondary" disabled>Limpiar lista</button>
       </div>
-      <input id="picker" type="file" accept="video/*,.mp4,.mov,.webm">
-
-      <section id="fileBox" class="file">
-        <video id="inputPreview" class="thumb" muted preload="metadata"></video>
-        <div class="meta"><div id="fileName" class="name"></div><div class="pills"><span id="fileSize" class="pill"></span><span id="fileRes" class="pill">Leyendo resolución…</span><span id="fileDur" class="pill">Leyendo duración…</span></div></div>
-      </section>
-
-      <div class="actions">
-        <button id="convert" class="primary" disabled>Corregir video</button>
-        <button id="change" class="secondary" disabled>Cambiar archivo</button>
-        <button id="cancel" class="danger" hidden>Cancelar</button>
-      </div>
-
-      <section id="status" class="status" aria-live="polite">
-        <div class="statusline"><span id="statusText" class="statustext">Preparando…</span><span id="percent" class="percent">0%</span></div>
-        <div class="bar"><span id="progress"></span></div>
-        <p id="statusNote" class="note"></p>
-      </section>
-
-      <section id="result" class="result">
-        <h3>Video corregido</h3>
-        <p id="resultInfo"></p>
-        <video id="outputPreview" controls preload="metadata"></video>
-        <a id="download" class="download" href="#" download>Descargar MP4 corregido</a>
-      </section>
-
-      <details><summary>Registro técnico</summary><pre id="log">La conversión aún no ha comenzado.</pre></details>
-    </div></article>
-
+      <div id="summary" class="summary"><div class="summaryline"><span id="summaryText" class="statustext">Lote preparado</span><span id="totalPercent" class="percent">0%</span></div><div class="bar"><span id="totalProgress"></span></div><p id="summaryNote" class="note"></p></div>
+      <div id="queue" class="queue"><div class="empty">Todavía no ha seleccionado videos.</div></div>
+    </div></section>
     <aside class="card side"><div class="body">
-      <h2>Configuración automática</h2><p>No hay menús ni ajustes técnicos. La aplicación usa siempre estos parámetros.</p>
+      <h2>Formato de salida</h2><p>Todos los archivos conservan sus proporciones. Si hace falta, se agregan bandas sin recortar ni deformar la imagen.</p>
       <div class="specs">
-        <div class="spec"><div class="sicon">MP4</div><div><strong>H.264 + AAC</strong><small>WhatsApp y Premiere Pro</small></div></div>
+        <div class="spec"><div class="sicon">MP4</div><div><strong>H.264 + AAC</strong><small>Alta compatibilidad</small></div></div>
         <div class="spec"><div class="sicon">HD</div><div><strong>1920 × 1080</strong><small>Relación 16:9</small></div></div>
-        <div class="spec"><div class="sicon">1:1</div><div><strong>Píxel cuadrado</strong><small>Sin achatamiento anamórfico</small></div></div>
+        <div class="spec"><div class="sicon">1:1</div><div><strong>Píxel cuadrado</strong><small>SAR corregido</small></div></div>
         <div class="spec"><div class="sicon">30</div><div><strong>30 fps constantes</strong><small>Cadencia regular</small></div></div>
-        <div class="spec"><div class="sicon">420</div><div><strong>Color yuv420p</strong><small>Compatibilidad amplia</small></div></div>
       </div>
-      <div class="notice"><strong>Importante:</strong> no abra solamente este HTML con doble clic. En Windows use <b>INICIAR_LOCAL.cmd</b>, o publique toda la carpeta en GitHub Pages.</div>
+      <div class="notice"><strong>Uso de memoria:</strong> los videos se convierten de manera secuencial. Al descargar un resultado, su copia temporal se libera de la memoria del navegador.</div>
+      <details><summary>Registro técnico</summary><pre id="log">Esperando archivos…</pre></details>
     </div></aside>
-  </section>
+  </div>
   <footer>Normalizador local de video · FFmpeg WebAssembly incluido</footer>
 </main>
-
 <script type="module">
 import { FFmpeg } from './vendor/ffmpeg/index.js';
 
 const $=id=>document.getElementById(id);
-const drop=$('drop'),picker=$('picker'),fileBox=$('fileBox'),inputPreview=$('inputPreview'),outputPreview=$('outputPreview');
-const convertBtn=$('convert'),changeBtn=$('change'),cancelBtn=$('cancel'),statusBox=$('status'),statusText=$('statusText'),statusNote=$('statusNote'),percent=$('percent'),progress=$('progress'),result=$('result'),resultInfo=$('resultInfo'),download=$('download'),logBox=$('log');
-let file=null,inputURL=null,outputURL=null,ffmpeg=null,busy=false,cancelled=false,logs=[];
-
+const drop=$('drop'),picker=$('picker'),startBtn=$('start'),pauseBtn=$('pause'),cancelBtn=$('cancel'),downloadAllBtn=$('downloadAll'),clearBtn=$('clear');
+const queueBox=$('queue'),summary=$('summary'),summaryText=$('summaryText'),summaryNote=$('summaryNote'),totalPercent=$('totalPercent'),totalProgress=$('totalProgress'),logBox=$('log');
+let items=[],ffmpeg=null,running=false,paused=false,cancelling=false,currentId=null,logs=[],sequence=0;
 const coreURL=new URL('./vendor/core/ffmpeg-core.js',document.baseURI).href;
 const wasmURL=new URL('./vendor/core/ffmpeg-core.wasm',document.baseURI).href;
 
-function bytes(n){if(!n)return'0 B';const u=['B','KB','MB','GB'];const i=Math.min(Math.floor(Math.log(n)/Math.log(1024)),3);return `${(n/1024**i).toFixed(i?1:0)} ${u[i]}`}
-function duration(s){if(!Number.isFinite(s))return'Duración desconocida';const t=Math.round(s);return `${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`}
-function outName(n){return `${n.replace(/\.[^/.]+$/,'')}_corregido_1x1_30fps.mp4`}
-function addLog(m){if(!m)return;logs.push(String(m));if(logs.length>120)logs.shift();logBox.textContent=logs.join('\n');logBox.scrollTop=logBox.scrollHeight}
-function setProgress(v){v=Math.max(0,Math.min(1,Number.isFinite(v)?v:0));const p=Math.round(v*100);progress.style.width=`${p}%`;percent.textContent=`${p}%`}
-function showStatus(title,note='',p=null){statusBox.classList.add('show');statusText.textContent=title;statusNote.textContent=note;if(p!==null)setProgress(p)}
-function clearResult(){result.classList.remove('show');if(outputURL)URL.revokeObjectURL(outputURL);outputURL=null;outputPreview.removeAttribute('src');download.href='#'}
-function choose(){if(busy)return;picker.value='';picker.click()}
-function selectFile(f){if(!f)return;if(!(f.type.startsWith('video/')||/\.(mp4|mov|webm)$/i.test(f.name))){showStatus('Archivo no válido','Seleccione un video MP4, MOV o WebM.',0);return}file=f;clearResult();statusBox.classList.remove('show');logs=[];logBox.textContent='Archivo seleccionado. La conversión aún no ha comenzado.';if(inputURL)URL.revokeObjectURL(inputURL);inputURL=URL.createObjectURL(f);inputPreview.src=inputURL;$('fileName').textContent=f.name;$('fileSize').textContent=bytes(f.size);$('fileRes').textContent='Leyendo resolución…';$('fileDur').textContent='Leyendo duración…';inputPreview.onloadedmetadata=()=>{$('fileRes').textContent=`${inputPreview.videoWidth} × ${inputPreview.videoHeight}`;$('fileDur').textContent=duration(inputPreview.duration)};fileBox.classList.add('show');convertBtn.disabled=false;changeBtn.disabled=false}
-
-function newEngine(){
-  const engine=new FFmpeg();
-  engine.on('log',({message})=>{if(/frame=|Duration:|Stream #|error|invalid|encoder|Output #/i.test(message))addLog(message)});
-  engine.on('progress',({progress:p})=>{if(!busy||!Number.isFinite(p))return;setProgress(Math.min(.99,Math.max(0,p)));statusText.textContent='Convirtiendo el video…';statusNote.textContent='No cierre esta pestaña. La conversión se hace en este computador.'});
-  return engine;
+function bytes(n){if(!n)return'0 B';const u=['B','KB','MB','GB'];const i=Math.min(Math.floor(Math.log(n)/Math.log(1024)),3);return`${(n/1024**i).toFixed(i?1:0)} ${u[i]}`}
+function duration(s){if(!Number.isFinite(s))return'Duración desconocida';const t=Math.round(s);return`${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`}
+function outName(n){return`${n.replace(/\.[^/.]+$/,'')}_corregido_1x1_30fps.mp4`}
+function addLog(m){if(!m)return;logs.push(String(m));if(logs.length>160)logs.shift();logBox.textContent=logs.join('\n');logBox.scrollTop=logBox.scrollHeight}
+function validFile(f){return f&&(f.type.startsWith('video/')||/\.(mp4|mov|webm)$/i.test(f.name))}
+function itemById(id){return items.find(x=>x.id===id)}
+function setItemProgress(item,v){item.progress=Math.max(0,Math.min(1,Number.isFinite(v)?v:0));const el=document.querySelector(`[data-id="${item.id}"] .mini span`);if(el)el.style.width=`${Math.round(item.progress*100)}%`}
+function releaseResult(item){if(item.url)URL.revokeObjectURL(item.url);item.url=null;item.blob=null;if(item.status==='done')item.status='downloaded'}
+function releaseAll(){items.forEach(releaseResult)}
+function setSummary(title,note=''){summary.classList.add('show');summaryText.textContent=title;summaryNote.textContent=note;updateTotalProgress()}
+function updateTotalProgress(){
+  const n=items.length;if(!n){totalProgress.style.width='0%';totalPercent.textContent='0%';return}
+  const value=items.reduce((sum,x)=>sum+(x.status==='done'||x.status==='downloaded'||x.status==='error'||x.status==='cancelled'?1:x.progress||0),0)/n;
+  const p=Math.round(value*100);totalProgress.style.width=`${p}%`;totalPercent.textContent=`${p}%`;
 }
-
-async function ensureEngine(){
-  if(ffmpeg?.loaded)return ffmpeg;
-  ffmpeg=newEngine();
-  addLog(`Cargando motor local: ${coreURL}`);
-  await ffmpeg.load({coreURL,wasmURL});
-  addLog('Motor FFmpeg cargado correctamente.');
-  return ffmpeg;
+function statusLabel(item){return({pending:'Pendiente',converting:'Convirtiendo…',done:'Listo para descargar',downloaded:'Descargado · memoria liberada',error:`Error: ${item.error||'no fue posible convertirlo'}`,cancelled:'Cancelado'}[item.status]||item.status)}
+function render(){
+  if(!items.length){queueBox.innerHTML='<div class="empty">Todavía no ha seleccionado videos.</div>';summary.classList.remove('show')}else{
+    queueBox.innerHTML=items.map(item=>`<article class="item ${item.status==='converting'?'active':item.status==='done'||item.status==='downloaded'?'done':item.status==='error'?'error':''}" data-id="${item.id}"><div><div class="iname" title="${escapeHtml(item.file.name)}">${escapeHtml(item.file.name)}</div><div class="imeta"><span class="tag">${bytes(item.file.size)}</span><span class="tag">${escapeHtml(item.resolution||'Leyendo resolución…')}</span><span class="tag">${escapeHtml(item.duration||'Leyendo duración…')}</span></div><div class="istatus ${item.status==='error'?'bad':item.status==='done'?'ok':''}">${escapeHtml(statusLabel(item))}</div><div class="mini"><span style="width:${Math.round((item.progress||0)*100)}%"></span></div></div><div class="iactions">${item.status==='done'&&item.url?`<a class="download" href="${item.url}" download="${escapeHtml(outName(item.file.name))}" data-download="${item.id}">Descargar</a>`:''}<button class="small secondary" data-remove="${item.id}" ${item.status==='converting'?'disabled':''}>Eliminar</button></div></article>`).join('');
+  }
+  const hasPending=items.some(x=>x.status==='pending'||x.status==='cancelled'||x.status==='error');
+  startBtn.disabled=running||!hasPending;startBtn.textContent=items.some(x=>x.status==='error'||x.status==='cancelled')&&!items.some(x=>x.status==='pending')?'Reintentar pendientes':'Convertir lote';
+  pauseBtn.disabled=!running||paused;pauseBtn.textContent=paused?'Pausa solicitada':'Pausar después del actual';
+  cancelBtn.disabled=!running;downloadAllBtn.disabled=!items.some(x=>x.status==='done'&&x.url);clearBtn.disabled=running||!items.length;
+  drop.classList.toggle('disabled',running);updateTotalProgress();
 }
-
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function choose(){if(!running){picker.value='';picker.click()}}
+function addFiles(list){
+  const selected=[...list],valid=selected.filter(validFile);if(!valid.length){setSummary('No se añadieron archivos','Seleccione videos MP4, MOV o WebM.');return}
+  for(const file of valid){const item={id:`v${Date.now()}_${++sequence}`,file,status:'pending',progress:0,url:null,blob:null,resolution:'',duration:'',error:''};items.push(item);readMetadata(item)}
+  setSummary(`${valid.length} video${valid.length===1?' añadido':'s añadidos'}`,`${items.length} archivo${items.length===1?' en la lista':'s en la lista'}.`);addLog(`Añadidos ${valid.length} archivo(s) a la cola.`);render();
+}
+function readMetadata(item){const url=URL.createObjectURL(item.file),v=document.createElement('video');v.preload='metadata';v.onloadedmetadata=()=>{item.resolution=`${v.videoWidth} × ${v.videoHeight}`;item.duration=duration(v.duration);URL.revokeObjectURL(url);render()};v.onerror=()=>{URL.revokeObjectURL(url);item.resolution='Metadatos no disponibles';item.duration='';render()};v.src=url}
+function newEngine(){const engine=new FFmpeg();engine.on('log',({message})=>{if(/frame=|Duration:|Stream #|error|invalid|encoder|Output #/i.test(message))addLog(message)});engine.on('progress',({progress:p})=>{const item=itemById(currentId);if(!running||!item||!Number.isFinite(p))return;setItemProgress(item,Math.min(.99,Math.max(0,p)));updateTotalProgress()});return engine}
+async function ensureEngine(){if(ffmpeg?.loaded)return ffmpeg;ffmpeg=newEngine();addLog('Cargando el motor FFmpeg local…');await ffmpeg.load({coreURL,wasmURL});addLog('Motor FFmpeg cargado correctamente.');return ffmpeg}
 async function removeSafe(engine,path){try{await engine.deleteFile(path)}catch{}}
-
-async function convert(){
-  if(!file||busy)return;
-  busy=true;cancelled=false;clearResult();setProgress(0);convertBtn.hidden=true;changeBtn.hidden=true;cancelBtn.hidden=false;
-  const input='entrada'+(file.name.match(/\.[^/.]+$/)?.[0]||'.mp4');
-  const output='salida.mp4';
+async function convertOne(item){
+  currentId=item.id;item.status='converting';item.error='';setItemProgress(item,0);render();setSummary(`Convirtiendo ${items.indexOf(item)+1} de ${items.length}`,item.file.name);
+  const ext=item.file.name.match(/\.[^/.]+$/)?.[0]||'.mp4',input=`entrada_${item.id}${ext}`,output=`salida_${item.id}.mp4`;let e;
   try{
-    showStatus('Cargando el motor local…','El motor ya está dentro de la carpeta de la aplicación.',0);
-    const e=await ensureEngine();
-    if(cancelled)throw new Error('CANCELADO');
-    showStatus('Preparando el archivo…','Copiando el video a la memoria temporal del navegador.',.01);
-    await removeSafe(e,input);await removeSafe(e,output);
-    await e.writeFile(input,new Uint8Array(await file.arrayBuffer()));
-    addLog('Ejecutando: H.264 · 1920×1080 · SAR 1:1 · 30 fps CFR · AAC');
-    const code=await e.exec([
-      '-i',input,
-      '-map','0:v:0','-map','0:a:0?',
-      '-vf','fps=30,scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1',
-      '-r','30',
-      '-c:v','libx264','-preset','ultrafast','-crf','20','-pix_fmt','yuv420p','-profile:v','high','-level:v','4.1',
-      '-c:a','aac','-b:a','160k','-ar','48000',
-      '-movflags','+faststart',output
-    ]);
-    if(cancelled)throw new Error('CANCELADO');
-    if(code!==0)throw new Error(`FFmpeg terminó con código ${code}`);
-    showStatus('Preparando la descarga…','Leyendo el archivo corregido.',.99);
-    const data=await e.readFile(output);
-    const blob=new Blob([data.buffer],{type:'video/mp4'});
-    outputURL=URL.createObjectURL(blob);outputPreview.src=outputURL;download.href=outputURL;download.download=outName(file.name);resultInfo.textContent=`${bytes(blob.size)} · 1920×1080 · píxel 1:1 · 30 fps constantes`;result.classList.add('show');setProgress(1);showStatus('Conversión terminada','El MP4 corregido está listo para reproducir y descargar.',1);addLog('Conversión terminada correctamente.');
-    await removeSafe(e,input);await removeSafe(e,output);
+    e=await ensureEngine();if(cancelling)throw new Error('CANCELADO');await removeSafe(e,input);await removeSafe(e,output);await e.writeFile(input,new Uint8Array(await item.file.arrayBuffer()));
+    addLog(`Convirtiendo: ${item.file.name}`);
+    const code=await e.exec(['-i',input,'-map','0:v:0','-map','0:a:0?','-vf','fps=30,scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1','-r','30','-c:v','libx264','-preset','ultrafast','-crf','20','-pix_fmt','yuv420p','-profile:v','high','-level:v','4.1','-c:a','aac','-b:a','160k','-ar','48000','-movflags','+faststart',output]);
+    if(cancelling)throw new Error('CANCELADO');if(code!==0)throw new Error(`FFmpeg terminó con código ${code}`);const data=await e.readFile(output);item.blob=new Blob([data.buffer],{type:'video/mp4'});item.url=URL.createObjectURL(item.blob);item.status='done';setItemProgress(item,1);addLog(`Terminado: ${item.file.name} (${bytes(item.blob.size)})`);
   }catch(err){
-    const isCancel=cancelled||String(err).includes('CANCELADO')||String(err).includes('called FFmpeg.terminate');
-    if(isCancel){showStatus('Conversión cancelada','Puede volver a iniciarla con el mismo archivo.',0);addLog('Conversión cancelada.')}else{console.error(err);showStatus('No fue posible convertir el video',String(err?.message||err),0);statusText.classList.add('error');addLog(`ERROR: ${err?.stack||err}`)}
-  }finally{busy=false;cancelBtn.hidden=true;convertBtn.hidden=false;changeBtn.hidden=false;convertBtn.disabled=!file;changeBtn.disabled=!file}
+    const wasCancelled=cancelling||String(err).includes('CANCELADO')||String(err).includes('terminate');item.status=wasCancelled?'cancelled':'error';item.error=wasCancelled?'':String(err?.message||err);setItemProgress(item,wasCancelled?0:1);addLog(wasCancelled?`Cancelado: ${item.file.name}`:`ERROR en ${item.file.name}: ${item.error}`);if(!wasCancelled)console.error(err);
+  }finally{if(e){await removeSafe(e,input);await removeSafe(e,output)}currentId=null;render()}
 }
+async function startBatch(){
+  if(running)return;items.filter(x=>x.status==='error'||x.status==='cancelled').forEach(x=>{x.status='pending';x.error='';x.progress=0});running=true;paused=false;cancelling=false;render();
+  try{while(!cancelling){if(paused){setSummary('Lote pausado','Pulse “Continuar lote” cuando quiera reanudarlo.');break}const next=items.find(x=>x.status==='pending');if(!next)break;await convertOne(next)}}finally{running=false;currentId=null;render();const pending=items.filter(x=>x.status==='pending').length,done=items.filter(x=>x.status==='done'||x.status==='downloaded').length,failed=items.filter(x=>x.status==='error').length;if(cancelling)setSummary('Lote cancelado',`${done} terminado${done===1?'':'s'}; ${pending} pendiente${pending===1?'':'s'}.`);else if(paused)setSummary('Lote pausado',`${pending} archivo${pending===1?' pendiente':'s pendientes'}.`);else setSummary('Conversión del lote terminada',`${done} listo${done===1?'':'s'}${failed?`; ${failed} con error${failed===1?'':'es'}`:''}.`)}}
+function togglePause(){if(!running||paused)return;paused=true;render();setSummary('Pausa solicitada','La conversión actual terminará y la cola se detendrá antes del siguiente archivo.')}
+function cancelBatch(){if(!running)return;cancelling=true;paused=false;items.filter(x=>x.status==='pending').forEach(x=>x.status='cancelled');setSummary('Cancelando el lote…','Deteniendo la conversión actual.');try{ffmpeg?.terminate()}catch{}ffmpeg=null;render()}
+function removeItem(id){const item=itemById(id);if(!item||item.status==='converting')return;releaseResult(item);items=items.filter(x=>x.id!==id);render()}
+function markDownloaded(id){const item=itemById(id);if(!item||!item.url)return;setTimeout(()=>{releaseResult(item);addLog(`Descargado y liberado de memoria: ${item.file.name}`);render()},1500)}
+async function downloadAll(){
+  const ready=items.filter(x=>x.status==='done'&&x.url);if(!ready.length)return;setSummary('Iniciando las descargas',`El navegador puede solicitar permiso para descargar ${ready.length} archivos.`);
+  for(const item of ready){const a=document.createElement('a');a.href=item.url;a.download=outName(item.file.name);document.body.appendChild(a);a.click();a.remove();markDownloaded(item.id);await new Promise(resolve=>setTimeout(resolve,650))}
+}
+function clearList(){if(running)return;releaseAll();items=[];logs=[];logBox.textContent='Esperando archivos…';render()}
 
-function cancel(){if(!busy)return;cancelled=true;showStatus('Cancelando…','Deteniendo el motor.',0);try{ffmpeg?.terminate()}catch{}ffmpeg=null}
-
-drop.addEventListener('click',choose);drop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}});['dragenter','dragover'].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();if(!busy)drop.classList.add('drag')}));['dragleave','drop'].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(!busy)selectFile(e.dataTransfer?.files?.[0])});picker.addEventListener('change',()=>selectFile(picker.files?.[0]));convertBtn.addEventListener('click',convert);changeBtn.addEventListener('click',choose);cancelBtn.addEventListener('click',cancel);window.addEventListener('beforeunload',()=>{if(inputURL)URL.revokeObjectURL(inputURL);if(outputURL)URL.revokeObjectURL(outputURL)});
+drop.addEventListener('click',choose);drop.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!running){e.preventDefault();choose()}});['dragenter','dragover'].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();if(!running)drop.classList.add('drag')}));['dragleave','drop'].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(!running)addFiles(e.dataTransfer?.files||[])});picker.addEventListener('change',()=>addFiles(picker.files||[]));startBtn.addEventListener('click',startBatch);pauseBtn.addEventListener('click',togglePause);cancelBtn.addEventListener('click',cancelBatch);downloadAllBtn.addEventListener('click',downloadAll);clearBtn.addEventListener('click',clearList);queueBox.addEventListener('click',e=>{const d=e.target.closest('[data-download]'),r=e.target.closest('[data-remove]');if(d)markDownloaded(d.dataset.download);if(r)removeItem(r.dataset.remove)});window.addEventListener('beforeunload',releaseAll);
+render();
 </script>
 </body>
 </html>
